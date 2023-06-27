@@ -8,8 +8,9 @@ import scrapy
 
 class BitsclassicItem(scrapy.Item):
     title = scrapy.Field()
-    price = scrapy.Field()
+    # price = scrapy.Field()
     url = scrapy.Field()
     product_exist = scrapy.Field()
     domain = scrapy.Field()
     categories = scrapy.Field()
+    currency = scrapy.Field()

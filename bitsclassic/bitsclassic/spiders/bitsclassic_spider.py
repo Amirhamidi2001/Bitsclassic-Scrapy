@@ -9,6 +9,7 @@ from selenium import webdriver
 from time import sleep
 
 from bitsclassic.items import BitsclassicItem
+from . import plugins
 
 
 # class BitsclassicSpider(scrapy.Spider):
@@ -39,7 +40,7 @@ class BitsclassicSpider(scrapy.Spider):
         """
         url = "https://bitsclassic.com/fa/Product/ProductList"
         category_id = re.search(r"/(\d+)-", response.url).group(1)
-        num_products = 1000
+        num_products = 100
         data = {
             'Cats': str(category_id),
             'Size': str(num_products)
@@ -68,15 +69,17 @@ class BitsclassicSpider(scrapy.Spider):
         else:
             price = None
             product_exist = False
+        id = plugins.gen_random_id()
 
         # Create a new item with the extracted data
         item = BitsclassicItem()
         item["title"] = title.strip()
         item["categories"] = [category.strip() for category in categories][3:6]
         item["product_exist"] = product_exist
-        item["price"] = price
+        # item["price"] = price
         item["url"] = response.url
-        item["domain"] = "bitsclassic.com/fa"
+        item["domain"] = "bitsclassic.com"
+        item["currency"] = "تومان"
 
         # Yield the item to pass it to the next pipeline stage for further processing
         yield item
